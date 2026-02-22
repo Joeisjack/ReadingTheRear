@@ -1,0 +1,12 @@
+# Ignore image and video data
+*.mp4
+*.png
+*.jpg
+
+# Ignore Python Env and cache files
+__pycache__/
+venv/
+.env
+
+# Ingore model weights
+*.pt
