@@ -27,7 +27,7 @@ def make_square(img, size=224):
     return square
 
 def apply_border(img):
-    if random.random() < .3 or True:
+    if random.random() < .5:
         grayness = random.random()
         border_color = (0, 0, 0)  # default to black for grayscale
         if grayness < .1: # colorful
@@ -37,28 +37,33 @@ def apply_border(img):
                 random.randint(0, 255)
             )
         else: # grayscale
-            gray_value = random.randint(0, 220)
+            gray_value = random.randint(0, 255)
             border_color = (
                 gray_value,
                 gray_value,
                 gray_value
             )
         
-        thickness = random.randint(5, 15)
+        thickness = random.randint(5, 20)
+
+        img[:thickness, :] = border_color
+        img[-thickness:, :] = border_color
+        img[:, :thickness] = border_color
+        img[:, -thickness:] = border_color
 
         # Randomly obscure some combination of edges
-        random_edge = random.random()
-        if random_edge < .2:  # top + bottom
-            img[:thickness, :] = border_color
-            img[-thickness:, :] = border_color
-        elif random_edge < .4:  # left + right
-            img[:, :thickness] = border_color
-            img[:, -thickness:] = border_color
-        else:  # all edges
-            img[:thickness, :] = border_color
-            img[-thickness:, :] = border_color
-            img[:, :thickness] = border_color
-            img[:, -thickness:] = border_color
+        # random_edge = random.random()
+        # if random_edge < .2:  # top + bottom
+        #     img[:thickness, :] = border_color
+        #     img[-thickness:, :] = border_color
+        # elif random_edge < .4:  # left + right
+        #     img[:, :thickness] = border_color
+        #     img[:, -thickness:] = border_color
+        # else:  # all edges
+        #     img[:thickness, :] = border_color
+        #     img[-thickness:, :] = border_color
+        #     img[:, :thickness] = border_color
+        #     img[:, -thickness:] = border_color
 
     return img
 
@@ -260,7 +265,7 @@ checkpoint_fine  = ModelCheckpoint('best_state_tmodel_fine.keras', monitor='val_
 
 model.fit(
     train_dataset,
-    epochs = 200,
+    epochs = 500,
     validation_data = val_dataset,
     callbacks=[early_stop_fine, reduce_lr_fine, checkpoint_fine],
     verbose = 1

@@ -37,7 +37,7 @@ def setup():
     print(f"EasyOCR version: {easyocr.__version__}")
 
 def main():
-    img_path = "cali2.png"
+    img_path = "truck.jpg"
     try:
         image = cv2.imread(img_path)
     except Exception as e:
